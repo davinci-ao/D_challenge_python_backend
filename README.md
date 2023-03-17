@@ -13,7 +13,7 @@ A Docker compose structure to setup a local persistent environment with Python F
 - Python (latest) environment with pip installed, and the following packages:
   - flask-marshmallow
   - flask-cors
-  - 
+
 Your Python webserver is accessed through [http://localhost:5000](http://localhost:5000)
 
 ## Important!
