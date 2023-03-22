@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: dockerfiles/python.Dockerfile
     container_name: python_flask
-    restart: unless-stopped
+    restart: "no"
     tty: true
     ports: 
       - "5000:5000"

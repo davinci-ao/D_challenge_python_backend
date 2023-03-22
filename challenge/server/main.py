@@ -1,53 +1,63 @@
-import json
-from flask import Flask, jsonify, url_for, request
-from flask_marshmallow import Marshmallow
-from marshmallow import Schema, fields
+# import de benodigde packages
+from flask import Flask, jsonify, abort, request
 from flask_cors import CORS
+from procesData import *
 
+# variables
+# Dit maakt een nieuwe Flask app aan.
 app = Flask(__name__)
-CORS(app)
 
-class PersonSchema(Schema):
-    name = fields.Str()
-    firstName = fields.Str()
-    age = fields.Integer()
-    
-
-person = dict(name="Bond", firstName="James", age=55)
-personSchema = PersonSchema()
-
-# default route
+# functions
+# Default GET methode, geeft een string terug dat alles werkt zoals gewenst.
 @app.route('/', methods=["GET"])
 def index():
-    return jsonify({'data': 'Everything is working as expected!',
-                    'error': False,
-                    'error_msg': ''})
+    return 'Everything is working as expected!'
 
+# Write order to JSON file. Normally, you should write to a database.
+@app.route('/order/create', methods=["POST"])
+def createOrder():
+    resp = jsonify(success=True)
+    resp.status_code = 201
 
-# get person route
-@app.route('/person', methods=["GET"])
-def getPerson():
-    return jsonify({'data': personSchema.dump(person),
-                    'error': False,
-                    'error_msg': ''})
-
-# routes for updating
-@app.route('/person/update', methods=["POST"])
-def updatePerson():
+    # get data from post request
+    data = request.get_json(force=True)
     try:
-        # get fields from post request
-        data = request.json["data"]
-        # set fields in global object
-        person.name = data.name
-        person.firstName = data.firstName
-        person.age = data.age
-       
-        return jsonify({'data': personSchema.dump(person),
-                        'error': False,
-                        'error_msg': ''})
-    except Exception as e:
-        return jsonify({'data': '',
-                        'error': True,
-                        'error_msg': str(e)})
+        writeOrder(data)
+    except ValueError as e:
+        resp = jsonify(str(e))
+        resp.status_code = 400
 
-app.run(host='0.0.0.0', port=5000, debug=True)
+    # en geef response terug
+    return resp
+
+
+# opvragen_order
+@app.route('/order/get', methods=["GET"])
+def returnOrder():
+    # dit is een query parameter
+    orderId = request.args.get('orderId')
+    try:
+        order = getOrder(orderId)
+    except ValueError as e:
+        resp = jsonify(str(e))
+        resp.status_code = 400
+        return resp
+
+    resp = jsonify(str(order))
+    return resp
+
+# krijg factuur van order
+@app.route('/order/invoice', methods=["GET"])
+def getInvoice():
+    # dit is een query parameter
+    orderId = request.args.get('orderId')
+    # De functie generateInvoice wordt aangeroepen, deze functie moet je aanpassen.
+    invoice = generateInvoice(orderId)
+    resp = jsonify(str(invoice))
+    return resp
+
+
+# code
+CORS(app)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
