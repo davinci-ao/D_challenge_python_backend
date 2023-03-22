@@ -31,7 +31,7 @@ def generateInvoice(orderId: str) -> dict:
                'totaalBTWBedrag': 2.63}
     # todo:
     # 1 haal order gebaseerd op id
-    # 2 bereken de factuur en geef deze terug.
+    # 2 bereken de factuur en geef deze terug, zoals voorbeeld.
     return invoice
 
 

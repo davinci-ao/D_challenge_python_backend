@@ -56,7 +56,6 @@ def getInvoice():
     resp = jsonify(str(invoice))
     return resp
 
-
 # code
 CORS(app)
 if __name__ == '__main__':
