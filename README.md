@@ -3,8 +3,9 @@ A Docker compose structure to setup a local persistent environment with Python F
 
 ## Installation
 - Make sure you have docker AND docker compose installed (easiest way to do this is to install docker desktop - [Download Docker Desktop](https://www.docker.com/products/docker-desktop) )
-- Run the following command: docker compose --env-file=.env.docker up -d
+- Run the following command: docker compose --env-file=.env.docker up -d (in the folder of your repo!)
 - Let the process finish setting up your environment
+- Read It's Learning, after that:
 - Start coding your backend in the folder "server"
 - Start coding your frontend in the folder "client"
 - **Don't change the location of the client and server folder!**
