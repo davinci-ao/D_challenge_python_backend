@@ -1,4 +1,7 @@
 # D_challenge_python_backend
+This application environment consists a Docker container. This container contains all code of a web application for ordering drinks. This container itself must be run by the Docker App to activate the web application. 
+A Docker container allows you to develop and run the server- and clientcode independent of the operating system of the computer (Windows/Linux/MacOS) To use and run a Docker container you need to install the Docker App software first.
+
 A Docker compose structure to setup a local persistent environment with Python Flask and some boilerplate code in HTML &amp; JS for the challenge Python Backend
 
 ## Installation
